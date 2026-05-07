@@ -9,9 +9,6 @@ require_once __DIR__ . '/../config/authcheck.php';
     <title>Document</title>
 </head>
 <body>
-    <h1>Logout</h1>
-    <form method="POST" action="../controller/LogoutController.php">
-        <button type="submit">Sair</button>
-    </form>
+    <a>Olá mundo</a>
 </body>
 </html>

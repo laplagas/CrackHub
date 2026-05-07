@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: docker/php/Dockerfile
+      dockerfile: docker/Dockerfile
     container_name: php-app
     volumes:
       - ./src:/var/www/html

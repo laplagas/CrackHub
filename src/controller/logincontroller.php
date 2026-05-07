@@ -3,24 +3,30 @@
 require_once __DIR__ . '/../config/data.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
-    if(empty($user) || empty($password)) {
+    if(empty($email) || empty($password)) {
         die("Por favor, preencha todos os campos.");
     }
     try {
-        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = :email");
-        $stmt->bindParam(':email', $user);
+
+        // Preaprete Statiment que verifica se o email existe e retorna a senha hashada.
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if ($result && password_verify($password, $result['senha'])) {
+            session_start();
             $_SESSION['user_id'] = $result['id'];
-            echo "Login bem-sucedido!";
+            header("Location: ../views/dashboard.php");
+            exit();
         } else {
-            echo "Credenciais inválidas.";
+            header("Location: ../views/login.php?error=1");
+            exit();
         }
-    }
     } catch (PDOException $e) {
         die("Erro na consulta: " . $e->getMessage());
     }
+}
