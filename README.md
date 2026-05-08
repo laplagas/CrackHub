@@ -25,8 +25,7 @@ CrackHub é uma plataforma web segura que direciona usuários para sites confiá
 
 ### 1. Clone o repositório
 ```bash
-git clone <seu-repositorio>
-cd CrackHub
+git clone CrackHub
 ```
 
 ### 2. Instale as dependências PHP
@@ -54,7 +53,7 @@ Edite o .env com suas configurações:
 
 ```
 DB_CONNECTION=mysql
-DB_DATABASE=crackhub
+DB_DATABASE=exemple
 DB_ROOT=root
 DB_PASSWORD=sua_senha_aqui
 DB_HOST=localhost
@@ -134,7 +133,7 @@ O CrackHub implementa um rigoroso controle de acesso para proteção do catálog
 
 #### Adicionar Novos Jogos (Apenas Moderadores/Admins)
 
-Apenas usuários com permissão de **Moderador** ou **Administrador** podem:
+Apenas usuários com permissão de **Administrador** podem:
 
 - ✅ Adicionar novos jogos ao catálogo
 - ✅ Editar informações de jogos
@@ -145,7 +144,6 @@ Apenas usuários com permissão de **Moderador** ou **Administrador** podem:
 #### Fluxo de Submissão
 
 1. Usuários comuns podem **sugerir** novos jogos
-2. Moderadores **analisam** as sugestões
 3. Moderadores **validam** os links para segurança
 4. Após aprovação, o jogo é **publicado** no catálogo
 
@@ -162,8 +160,6 @@ Apenas usuários com permissão de **Moderador** ou **Administrador** podem:
 No banco de dados, altere o role do usuário:
 
 ```sql
-UPDATE users SET role = 'moderator' WHERE id = user_id;
--- ou
 UPDATE users SET role = 'admin' WHERE id = user_id;
 ```
 
@@ -171,19 +167,19 @@ UPDATE users SET role = 'admin' WHERE id = user_id;
 
 ```
 src/
-├── assets/          # Imagens e recursos estáticos
-├── config/          # Configurações (auth, dados)
-├── controller/      # Controllers (Login, Register, etc)
-│   ├── logincontroller.php
-│   ├── logoutcontroller.php
+├── assets/                # Imagens e recursos estáticos
+├── config/
+│   ├── authcheck.php      # Validação de autenticação
+│   └── data.php           # Funções/dados de suporte
+├── controller/
 │   ├── RegisterController.php
-│   └── GamesController.php    # Gerenciamento de jogos
-└── views/           # Templates
-    ├── login.php
+│   ├── logincontroller.php
+│   └── logoutcontroller.php
+└── views/
     ├── dashboard.php
-    └── games/
-        ├── add.php          # Adicionar novo jogo (admins/mods)
-        └── edit.php         # Editar jogo (admins/mods)
+    ├── login.php
+    ├── logout.php
+    └── register.php
 ```
 
 ## Funcionalidades Principais
@@ -206,21 +202,3 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para d
 
 Para suporte ou reportar problemas, abra uma issue no repositório.
 ```
-
----
-
-Para aplicar essas mudanças, você pode:
-1. Abrir o README.md no VS Code
-2. Copiar este conteúdo completo
-3. Substituir o conteúdo atual
-4. Salvar o arquivo
-
-Quer que eu detalhe mais alguma seção específica?---
-
-Para aplicar essas mudanças, você pode:
-1. Abrir o README.md no VS Code
-2. Copiar este conteúdo completo
-3. Substituir o conteúdo atual
-4. Salvar o arquivo
-
-Quer que eu detalhe mais alguma seção específica?
