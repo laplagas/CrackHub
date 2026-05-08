@@ -1,0 +1,32 @@
+<?php
+
+require_once __DIR__ . '/../config/data.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    if(empty($email) || empty($password)) {
+        die("Por favor, preencha todos os campos.");
+    }
+    try {
+
+        // Preaprete Statiment que verifica se o email existe e retorna a senha hashada.
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result && password_verify($password, $result['senha'])) {
+            session_start();
+            $_SESSION['user_id'] = $result['id'];
+            header("Location: ../views/dashboard.php");
+            exit();
+        } else {
+            header("Location: ../views/login.php?error=1");
+            exit();
+        }
+    } catch (PDOException $e) {
+        die("Erro na consulta: " . $e->getMessage());
+    }
+}
