@@ -55,9 +55,6 @@ if(isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
             <a href="register.php" class="hover:underline">
                 Não tem uma conta? Registre-se
             </a>
-            <a href="../forgot-password.php" class="hover:underline">
-                Esqueci minha senha
-            </a>
         </div>
 
     </div>

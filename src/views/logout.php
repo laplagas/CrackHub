@@ -4,6 +4,7 @@ require_once __DIR__ . '/../config/authcheck.php';
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <link rel="icon" type="image/x-icon" href="../assets/images/logocrackhub.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crack Hub - Logout</title>

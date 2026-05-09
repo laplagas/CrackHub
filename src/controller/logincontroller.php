@@ -20,6 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result && password_verify($password, $result['senha'])) {
             session_start();
             $_SESSION['user_id'] = $result['id'];
+            $_SESSION['class'] = $result['class'];
+            $update = $conn->prepare("UPDATE users SET last_login = NOW() WHERE id = :id");
+            $update->bindParam(':id', $result['id']);
+            $update->execute();
             header("Location: ../views/dashboard.php");
             exit();
         } else {
